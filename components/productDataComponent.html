@@ -1,0 +1,49 @@
+
+<!-- <p>{{productDataController.productData}}</p> -->
+<div class="outerMainDiv">
+    <div class="navBar">
+        Search: <input type="text" ng-model="searchItem">
+        <i class="fa fa-shopping-cart" style="font-size:36px" ng-mouseover="productDataController.showCart()"></i>
+        <p>{{ productDataController.itemCount  }}</p>
+    </div>
+    <div class="itemsCartDiv">
+        <div class="cartProductDiv" ng-repeat="cartProduct in productDataController.itemsCart " ng-show="productDataController.cartDiv">
+              <div class="productImage">
+                      <img src="{{cartProduct.imgUrl}}">
+              </div>  
+              <div calss="productDescriptionDiv">
+                      <div class="productName">
+                              <p>{{cartProduct.name}}</p>
+                      </div>
+                     
+                      <div class="productDescription">
+                              <p>{{cartProduct.description | limitTo: 30 }}</p>  
+                      </div>
+              </div> 
+        </div>
+    </div>
+    <div class="sortIndex">
+
+        Sort By:<select id="sortId" ng-click="productDataController.sortProducts()">
+            <option ng-repeat="index in productDataController.sortIndexList.availableOptions" value={{index.id}}>
+                {{index.name}}
+            </option>
+        
+        </select>
+    </div>
+
+    <div class="componentDiv">
+        <!-- <div class="productDiv" ng-repeat= "product in productDataController.productData | filter:searchItem"> -->
+        <!-- <div class="productDiv" ng-repeat= "product in productDataController.productData  | productFilter: productDataController.sortText"> -->
+        <div class="productDiv" ng-repeat="product in productDataController.productData | filter:searchItem | productFilter: productDataController.sortText">
+           <product-info 
+            product-details="product"
+            on-add-to-cart="productDataController.addItemToCart(product)">
+        </product-info>
+        </div>
+    </div>
+    <div>
+        <product-rating product-details="productDataController.productData"></product-rating>
+    </div>
+
+</div>
